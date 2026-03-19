@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wayve Type Scale Tool</title>
+    <style>
+        @font-face {
+            font-display: swap;
+            font-family: 'Work Sans';
+            font-style: normal;
+            font-weight: 300;
+            src: url('https://wayve.crushed.co.uk/wp-content/themes/wayve/fonts/work-sans-v24-latin_latin-ext-300.woff2') format('woff2')
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Work Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://wayve.crushed.co.uk/wp-content/themes/wayve/fonts/work-sans-v24-latin_latin-ext-regular.woff2') format('woff2')
+        }
+
+
+        :root {
+            font-size: 16px;
+            line-height: 1;
+            --step--2: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step--1: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-0: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-1: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-2: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-3: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-4: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-5: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+            --step-6: clamp(1.125rem, 1.0739rem + 0.2273vw, 1.25rem);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: #f8fafc;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+            max-width: 1000px;
+            margin-inline: auto;
+        }
+
+        .viewport-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin-inline: auto;
+            margin-top: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .viewport-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .viewport-title {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            padding-right: 45px;
+            font-family: inherit;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #3b82f6;
+        }
+
+        .form-select {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2364748b' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .input-unit {
+            position: absolute;
+            right: 16px;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .scale-name {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .type-preview {
+            /* max-width: 1000px; */
+            margin-top: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-title {
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 32px;
+        }
+
+        .type-scale-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .type-scale-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .type-scale-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .type-scale-sample {
+            color: #0f172a;
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .step--2 {
+            font-size: var(--step--2);
+        }
+
+        .step--1 {
+            font-size: var(--step--1);
+        }
+
+        .step-0 {
+            font-size: var(--step-0);
+        }
+
+        .step-1 {
+            font-size: var(--step-1);
+        }
+
+        .step-2 {
+            font-size: var(--step-2);
+        }
+
+        .step-3 {
+            font-size: var(--step-3);
+        }
+
+        .step-4 {
+            font-size: var(--step-4);
+        }
+
+        .step-5 {
+            font-size: var(--step-5);
+        }
+
+        .step-6 {
+            font-size: var(--step-6);
+        }
+
+        .viewport-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            font-size: 0.875rem;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            z-index: 1000;
+        }
+
+        .viewport-indicator-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .viewport-indicator-value {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #0f172a;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .viewport-indicator-unit {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-left: 4px;
+        }
+
+        .graph-view {
+            max-width: 1000px;
+            margin-top: 40px;
+            margin-inline: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .graph-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            margin-top: 24px;
+        }
+
+        .graph-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .graph-line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        .graph-axis {
+            stroke: #cbd5e1;
+            stroke-width: 1;
+        }
+
+        .graph-axis-dashed {
+            stroke: #cbd5e1;
+            stroke-width: 1;
+            stroke-dasharray: 4 4;
+        }
+
+        .graph-label {
+            font-size: 12px;
+            fill: #64748b;
+            font-family: inherit;
+        }
+
+        .graph-label-bold {
+            font-size: 12px;
+            fill: #334155;
+            font-weight: 400;
+            font-family: inherit;
+        }
+
+        .graph-marker {
+            fill: white;
+            stroke-width: 2;
+        }
+
+        .graph-marker-label {
+            font-size: 11px;
+            font-weight: 600;
+            font-family: inherit;
+        }
+
+        .css-output {
+            max-width: 1000px;
+            margin-top: 40px;
+            margin-inline: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .css-output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .copy-button {
+            padding: 8px 16px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-button:hover {
+            background: #2563eb;
+        }
+
+        .copy-button:active {
+            background: #1d4ed8;
+        }
+
+        .copy-button.copied {
+            background: #10b981;
+        }
+
+        .css-code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 24px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .css-code-line {
+            white-space: pre;
+        }
+
+        .css-property {
+            color: #a78bfa;
+        }
+
+        .css-value {
+            color: #34d399;
+        }
+
+        .css-comment {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .viewport-form {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 24px;
+            }
+
+            .type-preview {
+                padding: 24px;
+            }
+
+            .graph-view {
+                padding: 24px;
+            }
+
+            .graph-container {
+                height: 400px;
+            }
+
+            .css-output {
+                padding: 24px;
+            }
+
+            .css-code {
+                font-size: 12px;
+                padding: 16px;
+            }
+
+            .viewport-indicator {
+                bottom: 10px;
+                right: 10px;
+                padding: 12px 16px;
+            }
+
+            .viewport-indicator-value {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Wayve Type Scale Tool</h1>
+
+        <form class="viewport-form">
+            <!-- Min Viewport Section -->
+            <div class="viewport-section">
+                <h2 class="viewport-title">Min Viewport</h2>
+
+                <div class="form-group">
+                    <label class="form-label" for="min-width">Width</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="min-width" class="form-input" value="360" min="0">
+                        <span class="input-unit">px</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="min-font-size">Font size</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="min-font-size" class="form-input" value="18" min="0" step="0.1">
+                        <span class="input-unit">px</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="min-type-scale">Type scale</label>
+                    <select id="min-type-scale" class="form-select">
+                        <option value="1.067">1.067</option>
+                        <option value="1.125">1.125</option>
+                        <option value="1.2" selected>1.2</option>
+                        <option value="1.25">1.25</option>
+                        <option value="1.333">1.333</option>
+                        <option value="1.414">1.414</option>
+                        <option value="1.5">1.5</option>
+                        <option value="1.618">1.618</option>
+                        <option value="1.667">1.667</option>
+                        <option value="1.778">1.778</option>
+                        <option value="1.875">1.875</option>
+                        <option value="2">2</option>
+                    </select>
+                    <div class="scale-name" id="min-scale-name">Minor Third</div>
+                </div>
+            </div>
+
+            <!-- Max Viewport Section -->
+            <div class="viewport-section">
+                <h2 class="viewport-title">Max Viewport</h2>
+
+                <div class="form-group">
+                    <label class="form-label" for="max-width">Width</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="max-width" class="form-input" value="1920" min="0">
+                        <span class="input-unit">px</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="max-font-size">Font size</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="max-font-size" class="form-input" value="20" min="0" step="0.1">
+                        <span class="input-unit">px</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="max-type-scale">Type scale</label>
+                    <select id="max-type-scale" class="form-select">
+                        <option value="1.067">1.067</option>
+                        <option value="1.125">1.125</option>
+                        <option value="1.2">1.2</option>
+                        <option value="1.25" selected>1.25</option>
+                        <option value="1.333">1.333</option>
+                        <option value="1.414">1.414</option>
+                        <option value="1.5">1.5</option>
+                        <option value="1.618">1.618</option>
+                        <option value="1.667">1.667</option>
+                        <option value="1.778">1.778</option>
+                        <option value="1.875">1.875</option>
+                        <option value="2">2</option>
+                    </select>
+                    <div class="scale-name" id="max-scale-name">Major Third</div>
+                </div>
+            </div>
+        </form>
+
+        <div class="type-preview">
+            <h2 class="preview-title">Type Scale Preview</h2>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step--2 (XS)<span id="current-size--2"></span></div>
+                <div class="type-scale-sample step--2">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step--1 (S)<span id="current-size--1"></span></div>
+                <div class="type-scale-sample step--1">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label"><strong>--step-0 (Base/M)<span id="current-size-0"></span></strong></div>
+                <div class="type-scale-sample step-0">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-1 (L)<span id="current-size-1"></span></div>
+                <div class="type-scale-sample step-1">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-2 (XL)<span id="current-size-2"></span></div>
+                <div class="type-scale-sample step-2">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-3 (2XL)<span id="current-size-3"></span></div>
+                <div class="type-scale-sample step-3">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-4 (3XL)<span id="current-size-4"></span></div>
+                <div class="type-scale-sample step-4">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-5 (4XL)<span id="current-size-5"></span></div>
+                <div class="type-scale-sample step-5">The quick brown fox jumps over the lazy dog</div>
+            </div>
+
+            <div class="type-scale-item">
+                <div class="type-scale-label">--step-6 (5XL)<span id="current-size-6"></span></div>
+                <div class="type-scale-sample step-6">The quick brown fox jumps over the lazy dog</div>
+            </div>
+        </div>
+
+        <div class="graph-view">
+            <h2 class="preview-title">Graph View</h2>
+            <div class="graph-container">
+                <svg class="graph-svg" id="graph-svg"></svg>
+            </div>
+        </div>
+
+        <div class="css-output">
+            <div class="css-output-header">
+                <h2 class="preview-title" style="margin-bottom: 0;">Generated CSS</h2>
+                <button class="copy-button" id="copy-button">Copy CSS</button>
+            </div>
+            <div class="css-code" id="css-code"></div>
+        </div>
+    </main>
+
+    <div class="viewport-indicator">
+        <div class="viewport-indicator-label">Viewport Width</div>
+        <div class="viewport-indicator-value">
+            <span id="viewport-width">0</span><span class="viewport-indicator-unit">px</span>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
