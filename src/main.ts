@@ -26,8 +26,8 @@ function calculateCurrentSize(minSize: number, maxSize: number, minVw: number, m
 function updateCurrentSizes() {
     const minWidth = parseFloat((document.getElementById('min-width') as HTMLInputElement)?.value || '360');
     const maxWidth = parseFloat((document.getElementById('max-width') as HTMLInputElement)?.value || '1920');
-    const minFontSize = parseFloat((document.getElementById('min-font-size') as HTMLInputElement)?.value || '18');
-    const maxFontSize = parseFloat((document.getElementById('max-font-size') as HTMLInputElement)?.value || '20');
+    const minFontSize = parseFloat((document.getElementById('min-font-size') as HTMLInputElement)?.value || '16');
+    const maxFontSize = parseFloat((document.getElementById('max-font-size') as HTMLInputElement)?.value || '28');
     const minScale = parseFloat((document.getElementById('min-type-scale') as HTMLSelectElement)?.value || '1.2');
     const maxScale = parseFloat((document.getElementById('max-type-scale') as HTMLSelectElement)?.value || '1.25');
 
