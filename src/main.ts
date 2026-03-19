@@ -324,6 +324,8 @@ function updateURL() {
     const maxFontSize = (document.getElementById('max-font-size') as HTMLInputElement)?.value;
     const minScale = (document.getElementById('min-type-scale') as HTMLSelectElement)?.value;
     const maxScale = (document.getElementById('max-type-scale') as HTMLSelectElement)?.value;
+    const fontFamily = (document.getElementById('font-family') as HTMLSelectElement)?.value;
+    const fontWeight = (document.getElementById('font-weight') as HTMLSelectElement)?.value;
 
     const params = new URLSearchParams();
     params.set('minWidth', minWidth);
@@ -332,6 +334,8 @@ function updateURL() {
     params.set('maxFontSize', maxFontSize);
     params.set('minScale', minScale);
     params.set('maxScale', maxScale);
+    if (fontFamily) params.set('font', fontFamily);
+    if (fontWeight) params.set('weight', fontWeight);
 
     const newURL = `${window.location.pathname}?${params.toString()}`;
     window.history.pushState({}, '', newURL);
@@ -347,6 +351,8 @@ function loadFromURL() {
     const maxFontSize = params.get('maxFontSize');
     const minScale = params.get('minScale');
     const maxScale = params.get('maxScale');
+    const fontFamily = params.get('font');
+    const fontWeight = params.get('weight');
 
     if (minWidth) (document.getElementById('min-width') as HTMLInputElement).value = minWidth;
     if (maxWidth) (document.getElementById('max-width') as HTMLInputElement).value = maxWidth;
@@ -354,6 +360,20 @@ function loadFromURL() {
     if (maxFontSize) (document.getElementById('max-font-size') as HTMLInputElement).value = maxFontSize;
     if (minScale) (document.getElementById('min-type-scale') as HTMLSelectElement).value = minScale;
     if (maxScale) (document.getElementById('max-type-scale') as HTMLSelectElement).value = maxScale;
+    if (fontFamily) (document.getElementById('font-family') as HTMLSelectElement).value = fontFamily;
+    if (fontWeight) (document.getElementById('font-weight') as HTMLSelectElement).value = fontWeight;
+}
+
+// Function to update font family and weight on preview samples
+function updateFontFamily() {
+    const fontFamily = (document.getElementById('font-family') as HTMLSelectElement)?.value;
+    const fontWeight = (document.getElementById('font-weight') as HTMLSelectElement)?.value;
+    const samples = document.querySelectorAll('.type-scale-sample');
+
+    samples.forEach(sample => {
+        (sample as HTMLElement).style.fontFamily = `'${fontFamily}', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif`;
+        (sample as HTMLElement).style.fontWeight = fontWeight;
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -365,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScaleName('min-type-scale', 'min-scale-name');
     updateScaleName('max-type-scale', 'max-scale-name');
     updateTypeScale();
+    updateFontFamily();
 
     // Set initial URL if no params were present
     if (!hasURLParams) {
@@ -400,6 +421,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Add event listener for font family selector
+    const fontFamilySelect = document.getElementById('font-family');
+    if (fontFamilySelect) {
+        fontFamilySelect.addEventListener('change', () => {
+            updateFontFamily();
+            updateURL();
+        });
+    }
+
+    // Add event listener for font weight selector
+    const fontWeightSelect = document.getElementById('font-weight');
+    if (fontWeightSelect) {
+        fontWeightSelect.addEventListener('change', () => {
+            updateFontFamily();
+            updateURL();
+        });
+    }
 
     // Update viewport width on load and resize
     updateViewportWidth();
