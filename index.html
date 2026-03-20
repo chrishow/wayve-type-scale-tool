@@ -447,6 +447,10 @@
             margin-left: 4px;
         }
 
+        .details-container {
+            padding-inline: 20px;
+        }
+
         .graph-view {
             max-width: 1000px;
             margin-top: 40px;
@@ -809,19 +813,21 @@
             </div>
         </div>
 
-        <div class="graph-view">
-            <h2 class="preview-title">Graph View</h2>
-            <div class="graph-container">
-                <svg class="graph-svg" id="graph-svg"></svg>
+        <div class="details-container">
+            <div class="graph-view">
+                <h2 class="preview-title">Graph View</h2>
+                <div class="graph-container">
+                    <svg class="graph-svg" id="graph-svg"></svg>
+                </div>
             </div>
-        </div>
 
-        <div class="css-output">
-            <div class="css-output-header">
-                <h2 class="preview-title" style="margin-bottom: 0;">Generated CSS</h2>
-                <button class="copy-button" id="copy-button">Copy CSS</button>
+            <div class="css-output">
+                <div class="css-output-header">
+                    <h2 class="preview-title" style="margin-bottom: 0;">Generated CSS</h2>
+                    <button class="copy-button" id="copy-button">Copy CSS</button>
+                </div>
+                <div class="css-code" id="css-code"></div>
             </div>
-            <div class="css-code" id="css-code"></div>
         </div>
     </main>
 
