@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: '/wayve-type-scale-tool/', // GitHub Pages repository path
+    base: './', // GitHub Pages repository path
     plugins: [
         // ... other plugins if you have any
     ],

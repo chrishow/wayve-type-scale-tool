@@ -165,4 +165,4 @@ Created for the Wayve design system.
 
 ---
 
-**Live Demo**: [Add your deployed URL here]
+**Live Demo**: [https://chrishow.github.io/wayve-type-scale-tool/](https://chrishow.github.io/wayve-type-scale-tool/)
