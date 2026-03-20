@@ -6,32 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wayve Type Scale Tool</title>
     <style>
-        /* @font-face {
-            font-display: swap;
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 300;
-            src: url('https://wayve.crushed.co.uk/wp-content/themes/wayve/fonts/work-sans-v24-latin_latin-ext-300.woff2') format('woff2')
-        }
-
-        @font-face {
-            font-display: swap;
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 400;
-            src: url('https://wayve.crushed.co.uk/wp-content/themes/wayve/fonts/work-sans-v24-latin_latin-ext-regular.woff2') format('woff2')
-        }
-
-        @font-face {
-            font-family: 'Karla';
-            font-style: normal;
-            font-weight: 300;
-            font-display: auto;
-            src: url('https://wayve.crushed.co.uk/wp-content/themes/wayve/fonts/karla-normal-latin.woff2') format('woff2');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
- */
-
         @font-face {
             font-family: 'Karla';
             font-style: normal;
@@ -183,18 +157,46 @@
             font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
             font-family: 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
             background: #ddd;
-            padding: 40px 20px;
+            padding-bottom: 40px;
             line-height: 1.6;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-            letter-spacing: -0.01em;
-            max-width: 1000px;
-            margin-inline: auto;
+        .top-container {
+            background: url(https://wayve.crushed.co.uk/wp-content/uploads/2026/02/WAYVE_LONDON_Mach-E_HighRes-22-e1770721821988-1920x1564.jpg) 50% 50% no-repeat;
+            background-size: cover;
+            padding: 40px 40px 80px 40px;
+            position: relative;
+
+            >* {
+                position: relative;
+                z-index: 1;
+            }
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 0;
+            }
+
+            h1 {
+                font-family: 'Work Sans';
+                font-size: 2.5rem;
+                font-weight: 300;
+                margin-bottom: 20px;
+                letter-spacing: -0.02em;
+                max-width: 1000px;
+                margin-inline: auto;
+                color: white;
+            }
+
+
         }
+
 
         .viewport-form {
             display: grid;
@@ -286,8 +288,6 @@
         }
 
         .type-preview {
-            /* max-width: 1000px; */
-            margin-top: 40px;
             background: white;
             padding: 40px;
             border-radius: 8px;
@@ -580,6 +580,25 @@
             font-style: italic;
         }
 
+        .footer {
+            max-width: 1000px;
+            margin: 60px auto 0;
+            padding: 24px 0;
+            text-align: center;
+            /* border-top: 1px solid #e2e8f0; */
+        }
+
+        .footer-link {
+            font-size: 0.875rem;
+            color: #64748b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #3b82f6;
+        }
+
         @media (max-width: 768px) {
             .viewport-form {
                 grid-template-columns: 1fr;
@@ -634,89 +653,91 @@
 
 <body>
     <main>
-        <h1>Wayve Type Scale Tool</h1>
+        <div class="top-container">
+            <h1>Wayve Type Scale Tool</h1>
 
-        <form class="viewport-form">
-            <!-- Min Viewport Section -->
-            <div class="viewport-section">
-                <h2 class="viewport-title">Min Viewport</h2>
+            <form class="viewport-form">
+                <!-- Min Viewport Section -->
+                <div class="viewport-section">
+                    <h2 class="viewport-title">Min Viewport</h2>
 
-                <div class="form-group">
-                    <label class="form-label" for="min-width">Width</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="min-width" class="form-input" value="360" min="0">
-                        <span class="input-unit">px</span>
+                    <div class="form-group">
+                        <label class="form-label" for="min-width">Width</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="min-width" class="form-input" value="360" min="0">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="min-font-size">Font size</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="min-font-size" class="form-input" value="16" min="0" step="0.1">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="min-type-scale">Type scale</label>
+                        <select id="min-type-scale" class="form-select">
+                            <option value="1.067">1.067</option>
+                            <option value="1.125">1.125</option>
+                            <option value="1.2" selected>1.2</option>
+                            <option value="1.25">1.25</option>
+                            <option value="1.333">1.333</option>
+                            <option value="1.414">1.414</option>
+                            <option value="1.5">1.5</option>
+                            <option value="1.618">1.618</option>
+                            <option value="1.667">1.667</option>
+                            <option value="1.778">1.778</option>
+                            <option value="1.875">1.875</option>
+                            <option value="2">2</option>
+                        </select>
+                        <div class="scale-name" id="min-scale-name">Minor Third</div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="min-font-size">Font size</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="min-font-size" class="form-input" value="16" min="0" step="0.1">
-                        <span class="input-unit">px</span>
+                <!-- Max Viewport Section -->
+                <div class="viewport-section">
+                    <h2 class="viewport-title">Max Viewport</h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="max-width">Width</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="max-width" class="form-input" value="1920" min="0">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="max-font-size">Font size</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="max-font-size" class="form-input" value="28" min="0" step="0.1">
+                            <span class="input-unit">px</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="max-type-scale">Type scale</label>
+                        <select id="max-type-scale" class="form-select">
+                            <option value="1.067">1.067</option>
+                            <option value="1.125">1.125</option>
+                            <option value="1.2">1.2</option>
+                            <option value="1.25" selected>1.25</option>
+                            <option value="1.333">1.333</option>
+                            <option value="1.414">1.414</option>
+                            <option value="1.5">1.5</option>
+                            <option value="1.618">1.618</option>
+                            <option value="1.667">1.667</option>
+                            <option value="1.778">1.778</option>
+                            <option value="1.875">1.875</option>
+                            <option value="2">2</option>
+                        </select>
+                        <div class="scale-name" id="max-scale-name">Major Third</div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="min-type-scale">Type scale</label>
-                    <select id="min-type-scale" class="form-select">
-                        <option value="1.067">1.067</option>
-                        <option value="1.125">1.125</option>
-                        <option value="1.2" selected>1.2</option>
-                        <option value="1.25">1.25</option>
-                        <option value="1.333">1.333</option>
-                        <option value="1.414">1.414</option>
-                        <option value="1.5">1.5</option>
-                        <option value="1.618">1.618</option>
-                        <option value="1.667">1.667</option>
-                        <option value="1.778">1.778</option>
-                        <option value="1.875">1.875</option>
-                        <option value="2">2</option>
-                    </select>
-                    <div class="scale-name" id="min-scale-name">Minor Third</div>
-                </div>
-            </div>
-
-            <!-- Max Viewport Section -->
-            <div class="viewport-section">
-                <h2 class="viewport-title">Max Viewport</h2>
-
-                <div class="form-group">
-                    <label class="form-label" for="max-width">Width</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="max-width" class="form-input" value="1920" min="0">
-                        <span class="input-unit">px</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="max-font-size">Font size</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="max-font-size" class="form-input" value="28" min="0" step="0.1">
-                        <span class="input-unit">px</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="max-type-scale">Type scale</label>
-                    <select id="max-type-scale" class="form-select">
-                        <option value="1.067">1.067</option>
-                        <option value="1.125">1.125</option>
-                        <option value="1.2">1.2</option>
-                        <option value="1.25" selected>1.25</option>
-                        <option value="1.333">1.333</option>
-                        <option value="1.414">1.414</option>
-                        <option value="1.5">1.5</option>
-                        <option value="1.618">1.618</option>
-                        <option value="1.667">1.667</option>
-                        <option value="1.778">1.778</option>
-                        <option value="1.875">1.875</option>
-                        <option value="2">2</option>
-                    </select>
-                    <div class="scale-name" id="max-scale-name">Major Third</div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
         <div class="type-preview">
             <div class="preview-header">
@@ -810,6 +831,11 @@
             <span id="viewport-width">0</span><span class="viewport-indicator-unit">px</span>
         </div>
     </div>
+
+    <footer class="footer">
+        <a href="https://github.com/chrishow/wayve-type-scale-tool" target="_blank" rel="noopener noreferrer"
+            class="footer-link">View on GitHub</a>
+    </footer>
 
     <script type="module" src="/src/main.ts"></script>
 </body>
